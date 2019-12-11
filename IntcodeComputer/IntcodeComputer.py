@@ -26,7 +26,7 @@ class OutputtedValueInterrupt(BaseInterrupt):
 
 
 class IntcodeComputer:
-    def __init__(self, program: str, additional_memory_blocks: int = 10000, interrupt_mode: bool = True):
+    def __init__(self, program: str, additional_memory_blocks: int = 1000, interrupt_mode: bool = True):
         self.function_mapping = {
             1: self.add,
             2: self.multiply,
@@ -81,8 +81,8 @@ class IntcodeComputer:
         except IndexError:
             if self.interrupt_mode:
                 raise EmptyInputInterrupt
-        else:
-            self.instruction_pointer += 2
+
+        self.instruction_pointer += 2
 
     def output(self, modes):
         output = self.memory[self.get_address(modes[0], 1)]
@@ -135,6 +135,7 @@ class IntcodeComputer:
 
     def exit(self, modes):
         self.finished = True
+
 
     def get_address(self, mode, param):
         # Position mode
